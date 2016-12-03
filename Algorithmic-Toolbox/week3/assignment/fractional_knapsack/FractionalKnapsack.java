@@ -14,12 +14,12 @@ public class FractionalKnapsack {
 		Iterator<Item> it = items.iterator();
 		while(capacity > 0 && it.hasNext()){
 			Item item = it.next();
-			if (capacity > item.weight){
+			if (capacity >= item.weight){
 				capacity -= item.weight;
 				value += item.value;
 			}else{
 				value += capacity*item.unitPrice;
-				capacity = 0;
+				break;
 			}
 		}
 		return value;
@@ -49,6 +49,9 @@ class Item implements Comparable<Item>{
 	}
 
 	public int compareTo(Item other){
-		return (int)(this.unitPrice - other.unitPrice);
+		if (this.unitPrice > other.unitPrice) return 1;
+		if (this.unitPrice < other.unitPrice) return -1;
+		return 0;
+		// return (int)(this.unitPrice - other.unitPrice);
 	}
 }

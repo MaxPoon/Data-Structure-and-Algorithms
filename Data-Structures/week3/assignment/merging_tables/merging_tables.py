@@ -9,8 +9,21 @@ parent = list(range(0, n))
 ans = max(lines)
 
 def getParent(table):
+	global parent
 	# find parent and compress path
-	return parent[table]
+	parents_to_update = []
+
+	# Find root.
+	root = table
+	while root != parent[root]:
+		parents_to_update.append(parent[root])
+		root = parent[root]
+
+	# Compress path.
+	for i in parents_to_update:
+		parent[i] = root
+
+	return root
 
 def merge(destination, source):
 	global ans

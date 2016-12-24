@@ -4,28 +4,29 @@ import java.util.Iterator;
 
 public class Acyclicity {
 
-	private static boolean foundCycle(ArrayList<Integer>[] adj, int x, boolean[] visited){
+	private static boolean foundCycle(ArrayList<Integer>[] adj, int x, int[] visited){
 		Iterator<Integer> it = adj[x].iterator();
 		while(it.hasNext()){
 			int nextX = it.next();
-			if (!visited[nextX]) {
-				visited[nextX] = true;
+			if (visited[nextX] == -1) {
+				visited[nextX] = 0;
 				boolean found = foundCycle(adj, nextX, visited);
-				visited[nextX] = false;
+				visited[nextX] = 1;
 				if(found) return true;
 			}
-			if(visited[nextX]) return true;
+			if(visited[nextX] == 0) return true;
 		}
 		return false;
 	}
 
 	private static int acyclic(ArrayList<Integer>[] adj, int n) {
-		boolean[] visited = new boolean[n];
+		int[] visited = new int[n];
+		for(int i=0; i<n; i++) visited[i] = -1;
 		for(int i=0; i<n; i++){
-			visited[i] = true;
+			visited[i] = 0;
 			boolean found = foundCycle(adj, i, visited);
 			if(found) return 1;
-			visited[i] = false;
+			visited[i] = 1;
 		}
 		return 0;
 	}

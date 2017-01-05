@@ -9,5 +9,5 @@ I'm using python, java and c++ to solve the algorithms problems.
 2. ~~Data Structures~~
 3. ~~Algorithms on Graphs~~
 4. ~~Algorithms on Strings~~
-5. ~~Advanced Algorithms and Complexity~~
-6. ~~Genome Assembly Programming Challenge~~
+5. Advanced Algorithms and Complexity
+6. Genome Assembly Programming Challenge

@@ -3,9 +3,6 @@ from decimal import Decimal, getcontext
 from copy import deepcopy
 getcontext().prec = 30
 
-from decimal import Decimal, getcontext
-getcontext().prec = 30
-
 import math
 
 class Vector(object):

@@ -1,12 +1,13 @@
 import java.io.*;
 import java.util.*;
 
-public class Diet {
+public class AdAllocation {
 
 	BufferedReader br;
 	PrintWriter out;
 	StringTokenizer st;
 	boolean eof;
+
 	void solve() throws IOException {
 		int n = nextInt();
 		int m = nextInt();
@@ -28,7 +29,7 @@ public class Diet {
 		ls.print();
 	}
 
-	Diet() throws IOException {
+	AdAllocation() throws IOException {
 		br = new BufferedReader(new InputStreamReader(System.in));
 		out = new PrintWriter(System.out);
 		solve();
@@ -36,7 +37,7 @@ public class Diet {
 	}
 
 	public static void main(String[] args) throws IOException {
-		new Diet();
+		new AdAllocation();
 	}
 
 	String nextToken() {

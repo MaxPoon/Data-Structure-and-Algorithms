@@ -1,0 +1,98 @@
+# Uses python3
+DEFAULT_READS_NUMBER = 1618
+DEFAULT_MIN_OVERLAP_LENGTH = 13
+LENGTH_OF_READ = 100
+
+class TrieNode(object):
+	def __init__(self):
+		self.children = {}
+		self.indexes = []
+
+class SuffixTrie(object):
+	def __init__(self):
+		self.root = TrieNode()
+
+	def addSuffix(self, string, index):
+		for start in range(1, len(string)-DEFAULT_MIN_OVERLAP_LENGTH+1):
+			suffix = string[start:]
+			node = self.root
+			for char in suffix:
+				if char not in node.children:
+					node.children[char] = TrieNode()
+				node = node.children[char]
+			node.indexes.append(index)
+
+	def match(self, string):
+		adjacent = []
+		node = self.root
+		length = 0
+		for char in string:
+			if char not in node.children:
+				break
+			node = node.children[char]
+			length += 1
+			if length >= DEFAULT_MIN_OVERLAP_LENGTH and node.indexes:
+				for index in node.indexes:
+					adjacent.append((index, length))
+		return adjacent
+
+# def generateOverlapGraph(reads):
+# 	adj = [[] for _ in range(len(reads))]
+# 	for i in range(len(reads)-1):
+# 		for j in range(i+1, len(reads)):
+# 			overlap_length = stringsOverlapValue(reads[i], reads[j])
+# 			if overlap_length>=DEFAULT_MIN_OVERLAP_LENGTH:
+# 				adj[i].append((j, overlap_length))
+# 			overlap_length = stringsOverlapValue(reads[j], reads[i])
+# 			if overlap_length>=DEFAULT_MIN_OVERLAP_LENGTH:
+# 				adj[j].append((i, overlap_length))
+# 	for l in adj:
+# 		l.sort(key=lambda x: x[1], reverse=True)
+# 	return adj
+
+def stringsOverlapValue(s,t):
+	for i in range(LENGTH_OF_READ, 0, -1):
+		if s[LENGTH_OF_READ-i:] == t[:i]: return i
+	return 0
+
+def generateOverlapGraph(reads):
+	suffixTrie = SuffixTrie()
+	for i, read in enumerate(reads):
+		suffixTrie.addSuffix(read, i)
+	adj = [[] for _ in range(len(reads))]
+	for i, read in enumerate(reads):
+		adjacents = suffixTrie.match(read)
+		for adjacent in adjacents:
+			adj[adjacent[0]].append((i, adjacent[1]))
+	for l in adj:
+		l.sort(key=lambda x: x[1], reverse=True)
+	return adj 
+
+def buildLongestHamiltonianPath(adj):
+	current = 0
+	added = set([0])
+	path = [(0, 0)]
+	while len(added)<len(adj):
+		for i, link in enumerate(adj[current]):
+			if link[0] not in added:
+				added.add(link[0])
+				current = link[0]
+				path.append(link)
+				break
+	return path
+
+def assemble(path, reads):
+	genome = ""
+	for node in path:
+		genome += reads[node[0]][node[1]:]
+	genome = genome[:-stringsOverlapValue(reads[path[-1][0]], reads[0])]
+	return genome
+
+reads = []
+for i in range(DEFAULT_READS_NUMBER):
+	reads.append(input())
+reads = list(set(reads))
+adj = generateOverlapGraph(reads)
+path = buildLongestHamiltonianPath(adj)
+genome = assemble(path, reads)
+print(genome)

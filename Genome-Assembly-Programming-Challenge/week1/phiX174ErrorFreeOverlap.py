@@ -36,20 +36,6 @@ class SuffixTrie(object):
 					adjacent.append((index, length))
 		return adjacent
 
-# def generateOverlapGraph(reads):
-# 	adj = [[] for _ in range(len(reads))]
-# 	for i in range(len(reads)-1):
-# 		for j in range(i+1, len(reads)):
-# 			overlap_length = stringsOverlapValue(reads[i], reads[j])
-# 			if overlap_length>=DEFAULT_MIN_OVERLAP_LENGTH:
-# 				adj[i].append((j, overlap_length))
-# 			overlap_length = stringsOverlapValue(reads[j], reads[i])
-# 			if overlap_length>=DEFAULT_MIN_OVERLAP_LENGTH:
-# 				adj[j].append((i, overlap_length))
-# 	for l in adj:
-# 		l.sort(key=lambda x: x[1], reverse=True)
-# 	return adj
-
 def stringsOverlapValue(s,t):
 	for i in range(LENGTH_OF_READ, 0, -1):
 		if s[LENGTH_OF_READ-i:] == t[:i]: return i

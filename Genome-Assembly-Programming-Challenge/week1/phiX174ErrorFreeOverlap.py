@@ -8,15 +8,15 @@ class TrieNode(object):
 		self.children = {}
 		self.indexes = []
 
-class SuffixTrie(object):
+class PrefixTrie(object):
 	def __init__(self):
 		self.root = TrieNode()
 
-	def addSuffix(self, string, index):
-		for start in range(1, len(string)-DEFAULT_MIN_OVERLAP_LENGTH+1):
-			suffix = string[start:]
+	def addPrefix(self, string, index):
+		for end in range(DEFAULT_MIN_OVERLAP_LENGTH, len(string)):
+			reversed_prefix = string[:end][::-1]
 			node = self.root
-			for char in suffix:
+			for char in reversed_prefix:
 				if char not in node.children:
 					node.children[char] = TrieNode()
 				node = node.children[char]
@@ -26,7 +26,7 @@ class SuffixTrie(object):
 		adjacent = []
 		node = self.root
 		length = 0
-		for char in string:
+		for char in string[::-1]:
 			if char not in node.children:
 				break
 			node = node.children[char]
@@ -42,14 +42,12 @@ def stringsOverlapValue(s,t):
 	return 0
 
 def generateOverlapGraph(reads):
-	suffixTrie = SuffixTrie()
+	prefixTrie = PrefixTrie()
 	for i, read in enumerate(reads):
-		suffixTrie.addSuffix(read, i)
+		prefixTrie.addPrefix(read, i)
 	adj = [[] for _ in range(len(reads))]
 	for i, read in enumerate(reads):
-		adjacents = suffixTrie.match(read)
-		for adjacent in adjacents:
-			adj[adjacent[0]].append((i, adjacent[1]))
+		adj[i] = prefixTrie.match(read)
 	for l in adj:
 		l.sort(key=lambda x: x[1], reverse=True)
 	return adj 

@@ -24,7 +24,7 @@ tour = []
 start = '0'*(in_binary-1)
 tour.append(start)
 while(len(nodes[start])>0):
-	estart = start[1:len(start)]
+	estart = start[1:]
 	if estart+"1" in  nodes[start]:
 		tour.append(estart+"1")
 		nodes[start].remove(estart+"1")

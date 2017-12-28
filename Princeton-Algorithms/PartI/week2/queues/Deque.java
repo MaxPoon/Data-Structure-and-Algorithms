@@ -29,7 +29,7 @@ public class Deque<Item> implements Iterable<Item> {
    }
    public void addFirst(Item item) {
       if (item == null) {
-         throw new NullPointerException("Element e cannot be null.");
+         throw new IllegalArgumentException("Element e cannot be null.");
       }
       Node node = new Node(item);
       node.prev = head;
@@ -40,7 +40,7 @@ public class Deque<Item> implements Iterable<Item> {
    }
    public void addLast(Item item) {
       if (item == null) {
-         throw new NullPointerException("Element e cannot be null.");
+         throw new IllegalArgumentException("Element e cannot be null.");
       }
       Node node = new Node(item);
       node.next = tail;

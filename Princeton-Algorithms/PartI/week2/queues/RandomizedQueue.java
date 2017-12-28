@@ -32,7 +32,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
    }
 
    public void enqueue(Item item) {
-      if (item == null) throw new NullPointerException();
+      if (item == null) throw new IllegalArgumentException();
 
       if (last == queue.length) resize(queue.length * 2);
       queue[last++] = item;

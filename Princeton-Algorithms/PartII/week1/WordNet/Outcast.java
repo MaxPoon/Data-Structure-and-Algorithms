@@ -28,12 +28,6 @@ public class Outcast {
 
     // see test client below
     public static void main(String[] args) {
-        String synsets = "./src/assignments/a1_WordNet/wordnet/synsets.txt";
-        String hypernyms = "./src/assignments/a1_WordNet/wordnet/hypernyms.txt";
-        String outcasts = "./src/assignments/a1_WordNet/wordnet/outcast11.txt";
-        WordNet wordnet = new WordNet(synsets, hypernyms);
-        Outcast outcast = new Outcast(wordnet);
-
-        System.out.println(outcast.outcast(new In(outcasts).readAllLines()));
+        
     }
 }
